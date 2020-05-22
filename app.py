@@ -186,4 +186,3 @@ def handle_405(error):
         'message': 'method NOT allowed!',
         'success': False
     }), 405
-'''
