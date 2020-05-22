@@ -3,7 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask import json
 from flask_migrate import Migrate
-from models import setup_db, Movies, Actors, db, os
+#from models import setup_db, Movies, Actors, db
+import os
 
 #create and configure the app
 app = Flask(__name__)
@@ -32,7 +33,7 @@ def route_decorator():
         "status": 'App is running!',
         "database": os.environ['DATABASE_URL']
     })
-
+'''
 #Get Movies Decorator
 @app.route('/movies', methods=['GET'])
 def get_movies():
@@ -162,10 +163,6 @@ def patch_actor(a_id):
         "success": True
     })
 
-
-'''
-Error Handlers
-'''
 @app.errorhandler(400)
 def handle_400(error):
     return jsonify({
@@ -186,6 +183,4 @@ def handle_405(error):
         'message': 'method NOT allowed!',
         'success': False
     }), 405
-    
-
-
+'''
