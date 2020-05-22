@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask import json
 from flask_migrate import Migrate
 from models import setup_db, Movies, Actors, db
-import os
+from auth import AuthError, requires_auth
 
 #create and configure the app
 app = Flask(__name__)
@@ -48,6 +48,7 @@ def get_movies():
 
 #Get Actors Decorator
 @app.route('/actors', methods=['GET'])
+@requires_auth('get:actors')
 def get_actors():
     actors = Actors.query.all()
     formatted_actors = [actor.format() for actor in actors]
