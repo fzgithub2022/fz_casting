@@ -3,13 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask import json
 from flask_migrate import Migrate
-from models import setup_db, Movies, Actors, db
+from models import setup_db, Movies, Actors, db, os
 
 #create and configure the app
 app = Flask(__name__)
-setup_db(app) #connect to databse and models
+#setup_db(app) #connect to databse and models
 
-migrate = Migrate(app, db)
+#migrate = Migrate(app, db)
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -29,7 +29,8 @@ def after_request(response):
 def route_decorator():
     return jsonify({
         "success": True,
-        "status": 'App is running!'
+        "status": 'App is running!',
+        "database": os.environ['DATABASE_URL']
     })
 
 #Get Movies Decorator
