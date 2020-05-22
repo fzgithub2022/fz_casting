@@ -2,12 +2,15 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask import json
-from models import setup_db, Movies, Actors
+from flask_migrate import Migrate
+from models import setup_db, Movies, Actors, db
 
 def create_app(test_config=None):
     #create and configure the app
     app = Flask(__name__)
     setup_db(app) #connect to databse and models
+    
+    migrate = Migrate(app, db)
 
     cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -50,9 +53,18 @@ def create_app(test_config=None):
         try:
             movie = Movies.query.filter(Movies.id == m_id).one_or_none()
             movie.delete()
-            return jsonify({
-                'success': True
-            })
+        except BaseException:
+            abort(404)
+        return jsonify({
+            'status': 'Deleted Successful'
+        }), 200
+
+    #Delete Actor
+    @app.route('/actors/<int:m_id>', methods=['DELETE'])
+    def del_actor(a_id):
+        try:
+            actor = Actors.query.filter(Actors.id == a_id).one_or_none()
+            actor.delete()
         except BaseException:
             abort(404)
         return jsonify({
@@ -85,9 +97,13 @@ def create_app(test_config=None):
     def post_actor():
         body = request.get_json()
         name = body.get('name')
+        age = body.get('age')
+        gender = body.get('gender')
         try:
             actor = Actors(
-                name = name
+                name = name,
+                age = age,
+                gender = gender
             )
             Actors.insert(actor)
         except BaseException:

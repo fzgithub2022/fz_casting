@@ -28,11 +28,11 @@ class Movies(db.Model):
     __tablename__ = 'movies'
     id = Column(Integer, primary_key = True)
     name = Column(String)
-    actor = Column(Integer)
+    rdate = Column(String)
 
-    def __init__(self, name, actor):
+    def __init__(self, name, rdate):
         self.name = name
-        self.actor = actor
+        self.rdate = rdate
     
     def insert(self):
         db.session.add(self)
@@ -49,7 +49,7 @@ class Movies(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'actor': self.actor
+            'rdate': self.rdate
         }
 
 
@@ -61,9 +61,14 @@ class Actors(db.Model):
     __tablename__ = 'actors'
     id = Column(Integer, primary_key = True)
     name = Column(String)
+    age = Column(Integer)
+    gender = Column(String)
 
-    def __init__(self, name):
+    def __init__(self, name, age, gender):
         self.name = name
+        self.age = age
+        self.gender = gender
+
     
     def insert(self):
         db.session.add(self)
@@ -79,5 +84,7 @@ class Actors(db.Model):
     def format(self):
         return {
             'id': self.id,
-            'name': self.name
+            'name': self.name,
+            'age': self.age,
+            'gender': self.gender
         }
