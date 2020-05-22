@@ -25,26 +25,30 @@ def create_app(test_config=None):
             'GET, POST, PATCH, DELETE')
         return response
     
+    #Route decorator
+    @app.route('/')
+    def route_decorator():
+        return jsonify({
+            "success": True,
+            "status": 'App is running!'
+        })
+
     #Get Movies Decorator
     @app.route('/movies', methods=['GET'])
     def get_movies():
-        query_movies = Movies.query.all()
-        movies = {}
-        for movie in query_movies:
-            movies[movie.id] = movie.name
+        movies = Movies.query.all()
+        formatted_movies = [movie.format() for movie in movies]
         return jsonify({
-            'movies': movies
+            'movies': formatted_movies
         }), 200
     
     #Get Actors Decorator
     @app.route('/actors', methods=['GET'])
     def get_actors():
-        query_actors = Actors.query.all()
-        actors = {}
-        for actor in query_actors:
-            actors[actor.id] = actor.name
+        actors = Actors.query.all()
+        formatted_actors = [actor.format() for actor in actors]
         return jsonify({
-            'Actors': actors
+            'Actors': formatted_actors
         }), 200
     
     #Delete Movie
@@ -71,16 +75,16 @@ def create_app(test_config=None):
             'status': 'Deleted Successful'
         }), 200
         
-    #Insert MOvie
+    #Insert Movie
     @app.route('/movies', methods=['POST'])
     def post_movie():
         body = request.get_json()
         name = body.get('name')
-        actor = body.get('actor')
+        rdate = body.get('rdate')
         try:
             movie = Movies(
                 name = name,
-                actor = actor
+                rdate = rdate
             )
             Movies.insert(movie)
         except BaseException:
@@ -114,20 +118,74 @@ def create_app(test_config=None):
             'status': 'Successfully added a actor',
             'success': True
         }), 201
+
+    #Patch movie
+    @app.route('/movies/<int:m_id>', methods=['PATCH'])
+    def patch_movie(m_id):
+        body = request.get_json()
+        try:
+            movie = Movies.query.filter(Movies.id == m_id).one_or_none()
+            if movie is None:
+                abort(404)
+        except BaseException:
+            abort(404)
+        rdate = body.get('rdate')
+        if rdate is not None:
+            movie.rdate = rdate
+        Movies.update(movie)
+        return jsonify ({
+            "status": "Move updated",
+            "success": True
+        })
+
+    #Patch Actor
+    @app.route('/actors/<int:a_id>', methods=['PATCH'])
+    def patch_actor(a_id):
+        body = request.get_json()
+        try:
+            actor = Actors.query.filter(Actors.id == a_id).one_or_none()
+            if actor is None:
+                abort(404)
+        except BaseException:
+                abort(404)
+        age = body.get('age')
+        if age is None:
+            abort(400)
+        actor.age = age
+        gender = body.get('gender')
+        if gender is None:
+            abort(400)
+        actor.gender = gender
+        Actors.update(actor)
+        return jsonify({
+            "status": "Actor updated successfully",
+            "success": True
+        })
+
+
     '''
     Error Handlers
     '''
+    @app.errorhandler(400)
+    def handle_400(error):
+        return jsonify({
+            'message': 'bad request! shame on you',
+            'success': 'False'
+        }), 400
+
     @app.errorhandler(404)
     def handle_404(error):
         return jsonify({
             'message': 'resource not found!',
-            'success': False}), 404
+            'success': False
+        }), 404
 
     @app.errorhandler(405)
     def handle_405(error):
         return jsonify({
-            'message': 'method NOT allowed!'
-            }), 405
+            'message': 'method NOT allowed!',
+            'success': False
+        }), 405
 
     return app
     
