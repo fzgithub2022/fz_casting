@@ -80,6 +80,24 @@ def create_app(test_config=None):
             'success': True
         }), 201
 
+    #Insert Actor
+    @app.route('/actors', methods=['POST'])
+    def post_actor():
+        body = request.get_json()
+        name = body.get('name')
+        try:
+            actor = Actors(
+                name = name
+            )
+            Actors.insert(actor)
+        except BaseException:
+            return jsonify({
+                'status': 'new actor failed!'
+            })
+        return jsonify({
+            'status': 'Successfully added a actor',
+            'success': True
+        }), 201
     '''
     Error Handlers
     '''

@@ -3,9 +3,9 @@ from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
 
-database_name = "casting_db"
-database_uname = "casting"
-database_password = "castingpw"
+database_name = "capdb"
+database_uname = "postgres"
+database_password = "pgpw"
 database_path = "postgres://{}:{}@{}/{}".format(database_uname,database_password,'localhost:5432', database_name)
 
 db = SQLAlchemy()
@@ -61,3 +61,23 @@ class Actors(db.Model):
     __tablename__ = 'actors'
     id = Column(Integer, primary_key = True)
     name = Column(String)
+
+    def __init__(self, name):
+        self.name = name
+    
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    def update(self):
+        db.session.commit()
+    
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+    
+    def format(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
