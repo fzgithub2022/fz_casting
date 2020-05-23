@@ -49,7 +49,7 @@ def get_movies():
 #Get Actors Decorator
 @app.route('/actors', methods=['GET'])
 @requires_auth('get:actors')
-def get_actors():
+def get_actors(payload):
     actors = Actors.query.all()
     formatted_actors = [actor.format() for actor in actors]
     return jsonify({
