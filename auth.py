@@ -1,8 +1,8 @@
-import json, jose
+import json
 from flask import request, _request_ctx_stack
 from functools import wraps
 from urllib.request import urlopen
-
+from python-jose import jose
 
 AUTH0_DOMAIN = 'fzauth.auth0.com'
 ALGORITHMS = ['RS256']
