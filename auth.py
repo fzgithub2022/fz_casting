@@ -2,7 +2,7 @@ import json
 from flask import request, _request_ctx_stack
 from functools import wraps
 from urllib.request import urlopen
-import jose
+import jws
 
 
 AUTH0_DOMAIN = 'fzauth.auth0.com'
@@ -66,7 +66,7 @@ def check_permissions(permission, payload):
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
-    unverified_header = jose.jwt.get_unverified_header(token)
+    unverified_header = jwt.get_unverified_header(token)
     rsa_key = {}
     if 'kid' not in unverified_header:
         raise AuthError({
@@ -85,7 +85,7 @@ def verify_decode_jwt(token):
             }
     if rsa_key:
         try:
-            payload = jose.jwt.decode(
+            payload = jwt.decode(
                 token,
                 rsa_key,
                 algorithms=ALGORITHMS,
@@ -95,13 +95,13 @@ def verify_decode_jwt(token):
 
             return payload
 
-        except jose.jwt.ExpiredSignatureError:
+        except jwt.ExpiredSignatureError:
             raise AuthError({
                 'code': 'token_expired',
                 'description': 'Token expired.'
             }, 401)
 
-        except jose.jwt.JWTClaimsError:
+        except jwt.JWTClaimsError:
             raise AuthError({
                 'code': 'invalid_claims',
                 'description': 'Incorrect claims. Please, check the audience and issuer.'
