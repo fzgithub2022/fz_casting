@@ -53,7 +53,7 @@ def create_app(test_config=None):
     #Insert Actor
     @app.route('/actors', methods=['POST'])
     @requires_auth('post:actors')
-    def post_actor(payload)):
+    def post_actor(payload):
         body = request.get_json()
         name = body.get('name')
         age = body.get('age')
@@ -75,7 +75,7 @@ def create_app(test_config=None):
     #Get Movies Decorator
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
-    def get_movies(payload)):
+    def get_movies(payload):
         try:
             movies = Movies.query.all()
             formatted_movies = [movie.format() for movie in movies]
@@ -89,7 +89,7 @@ def create_app(test_config=None):
     #Get Actors Decorator
     @app.route('/actors', methods=['GET'])
     @requires_auth('get:actors')
-    def get_actors(payload)): #add payload when ready
+    def get_actors(payload): #add payload when ready
         try:
             actors = Actors.query.all()
             formatted_actors = [actor.format() for actor in actors]
@@ -103,7 +103,7 @@ def create_app(test_config=None):
     #Patch movie
     @app.route('/movies/<int:m_id>', methods=['PATCH'])
     @requires_auth('modify:movies')
-    def patch_movie(m_id, payload)):
+    def patch_movie(m_id, payload):
         body = request.get_json()
         try:
             movie = Movies.query.filter(Movies.id == m_id).one_or_none()
