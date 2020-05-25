@@ -177,6 +177,20 @@ def create_app(test_config=None):
             'message': 'bad request! shame on you',
             'success': False
         }), 400
+    
+    @app.errorhandler(401)
+    def handle_401(error):
+        return jsonify({
+            'message': error,
+            'success': False
+        })
+
+    @app.errorhandler(403)
+    def handle_403(error):
+        return jsonify({
+            'message': 'Hey, you\'re not allowed to that',
+            'success': False
+        }), 403
 
     @app.errorhandler(404)
     def handle_404(error):
