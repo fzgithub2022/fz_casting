@@ -179,7 +179,9 @@ def create_app(test_config=None):
         }), 400
     
     @app.errorhandler(AuthError)
-    def handle_401(error, status_code):
+    def handle_401(AuthError):
+        status_code = AuthError.status_code
+        error = AuthError.error
         if status_code == 400:
             return jsonify({
                 'message': error,
