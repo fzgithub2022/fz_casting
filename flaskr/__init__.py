@@ -183,7 +183,7 @@ def create_app(test_config=None):
         return jsonify({
             'message': error,
             'success': False
-        })
+        }), 401
 
     @app.errorhandler(403)
     def handle_403(error):
