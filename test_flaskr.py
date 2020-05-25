@@ -1,15 +1,15 @@
 import unittest
 import json
 
-from app.py import app
-from models import setup_db, Movies, Actors
+from flaskr import create_app
+from models import setup_db
 
 #Create Test Case
 class CastingAppTestCase(unittest.TestCase):
 
     def setUp(self):
         """Define test variables and initialize app."""
-        self.app = app.py
+        self.app = create_app()
         self.client = self.app.test_client
         self.database_name = "capdb_test"
         self.database_path = "postgresql://postgres:pgpw@localhost:5432/{}".format(self.database_name)
