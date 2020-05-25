@@ -2,11 +2,19 @@ THIS IS FZ_CASTING APP
 
 Description: Keep track of movies and actors. To run locall make sure to configure environmental variables.
 
+Dependencies:
+	1. Python3.6 or higher
+	2. Pip: To install Dependencies run pip install -r requirements.txt
+
 Environment Variables
 	1. AUTH_DOMAIN: RS256
 	2. ALGORITHMS: fzauth.auth0.com
 	3. API_AUDIENCE: CastAuthApi
 	4. Database URL: postgresql://postgres:pgpw@localhost:5432/capdb
+
+To run development server
+	1. export FLASK_APP=flaskr
+	2. run 'flask run --reload'
 
 URL:	https://guarded-harbor-15087.herokuapp.com/
 
@@ -30,6 +38,7 @@ ENDPOINTS:
 
 Postman RBAC testing collection:
 	casting.postman_collection.json
+
 JWTs Per Role:
 	1. Casting assistant Role
 		Role name: CAGroup
