@@ -3,8 +3,8 @@ from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 
 #Get DB PATH from ENV
-#database_path = os.environ['DATABASE_URL']
-database_path = 'postgresql://postgres:pgpw@localhost:5432/capdb'
+database_path = os.environ['DATABASE_URL']
+
 db = SQLAlchemy()
 
 '''

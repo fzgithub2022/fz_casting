@@ -1,0 +1,47 @@
+THIS IS FZ_CASTING APP
+
+Description: Keep track of movies and actors. To run locall make sure to configure environmental variables.
+
+Environment Variables
+	1. AUTH_DOMAIN: RS256
+	2. ALGORITHMS: fzauth.auth0.com
+	3. API_AUDIENCE: CastAuthApi
+	4. Database URL: postgresql://postgres:pgpw@localhost:5432/capdb
+
+URL:	https://guarded-harbor-15087.herokuapp.com/
+
+ENDPOINTS:
+	1. /movies
+		Methods:
+			GET: Return a dictionary of all movies
+			POST: Add a new movie to the database
+	2. /movies/<int:m_id>
+		Methods:
+			PATCH: Change movie release date
+			DELETE: Delete movie from database
+	3. /actors
+		Methods:
+			GET: Return a dictionary of all movies
+			POST: Add a new movie to the database
+	2. /actors/<int:a_id>
+		Methods:
+			PATCH: Change movie release date
+			DELETE: Delete movie from database
+
+JWTs Per Role:
+	1. Casting assistant Role
+		Role name: CAGroup
+			Username: causer@fzcasting.com
+			Password: IcanView1@
+			JWT:
+	2. Casting Director Role
+		Role name: CDGroup
+			Username: cduser@fzcasting.com
+			Password: ImanActors2#
+			JWT:
+	3. Executive Produser
+		Role name: EPGroup
+			Username: epuser@fzcasting.com
+			Password: ImanAll3$
+			JWT:
+	

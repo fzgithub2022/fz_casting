@@ -1,13 +1,12 @@
-import json
+import json, os
 from flask import request, _request_ctx_stack
 from functools import wraps
 from urllib.request import urlopen
 from jose import jwt
 
-
-AUTH0_DOMAIN = 'fzauth.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'CastAuthApi'
+AUTH0_DOMAIN = os.environ['AUTH_DOMAIN']
+ALGORITHMS = os.environ['ALGORITHMS']
+API_AUDIENCE = os.environ['API_AUDIENCE']
 
 # AuthError Exception
 class AuthError(Exception):
