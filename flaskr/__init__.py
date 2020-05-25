@@ -147,7 +147,7 @@ def create_app(test_config=None):
     #Delete Movie
     @app.route('/movies/<int:m_id>', methods=['DELETE'])
     @requires_auth('delete:movies')
-    def del_movie(m_id, payload):
+    def del_movie(payload, m_id):
         try:
             movie = Movies.query.filter(Movies.id == m_id).one_or_none()
             movie.delete()
