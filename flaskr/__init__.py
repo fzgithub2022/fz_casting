@@ -178,19 +178,23 @@ def create_app(test_config=None):
             'success': False
         }), 400
     
-    @app.errorhandler(401)
-    def handle_401(error):
-        return jsonify({
-            'message': error,
-            'success': False
-        }), 401
-
-    @app.errorhandler(403)
-    def handle_403(error):
-        return jsonify({
-            'message': 'Hey, you\'re not allowed to that',
-            'success': False
-        }), 403
+    @app.errorhandler(AuthError)
+    def handle_401(error, status_code):
+        if status_code == 400:
+            return jsonify({
+                'message': error,
+                'success': False
+            }), 400
+        if status_code == 401:
+            return jsonify({
+                'message': error,
+                'success': False
+            }), 401
+        if status_code == 403:
+            return jsonify({
+                'message': 'Hey, you\'re not allowed to that',
+                'success': False
+            }), 403
 
     @app.errorhandler(404)
     def handle_404(error):
