@@ -6,7 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flaskr import create_app
 from models import setup_db, Movies, Actors
 
-#Create Test Case
+
+# Create Test Case
 class CastingAppTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -30,24 +31,24 @@ class CastingAppTestCase(unittest.TestCase):
             self.db.init_app(self.app)
             # create all tables
             self.db.create_all()
-        
-        #new test movie
+
+        # new test movie
         self.new_movie = {
             'name': 'The Matrix',
             'rdate': 'March 30, 1999'
         }
 
-        #new test actor
+        # new test actor
         self.new_actor = {
             'name': 'Keanu Reeves',
             'age': 54,
             'gender': 'Female'
         }
-    
+
     def tearDown(self):
         pass
-    
-    #insert movie success and error test
+
+    # insert movie success and error test
     def test_insert_movie(self):
         res = self.client().post('/movies', json=self.new_movie)
         data = json.loads(res.data)
@@ -58,7 +59,7 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
 
-    #insert actor test
+    # insert actor test
     def test_insert_actor(self):
         res = self.client().post('/actors', json=self.new_actor)
         data = json.loads(res.data)
@@ -69,7 +70,7 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
 
-    #get movies test
+    # get movies test
     def test_movies(self):
         res = self.client().get('/movies')
         data = json.loads(res.data)
@@ -80,7 +81,7 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
 
-    #get actors test
+    # get actors test
     def test_actors(self):
         res = self.client().get('/actors')
         data = json.loads(res.data)
@@ -91,7 +92,7 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
 
-    #patch movie
+    # patch movie
     def test_patching_movie(self):
         res = self.client().patch('/movies/1', json={'rdate': 'March 31, 1999'})
         data = json.loads(res.data)
@@ -103,15 +104,15 @@ class CastingAppTestCase(unittest.TestCase):
         else:
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
-    
-    #test empty release date error
+
+    # test empty release date error
     def test_empty_rdate(self):
         res = self.client().patch('/movies/1', json={'rdate': None})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 400)
         self.assertEqual(data['success'], False)
 
-    #patch actor
+    # patch actor
     def test_patching_actor(self):
         res = self.client().patch('/actors/1', json={'age': 55, 'gender': 'Male'})
         data = json.loads(res.data)
@@ -123,8 +124,8 @@ class CastingAppTestCase(unittest.TestCase):
         else:
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
-    
-    #if one of the two properties is missing should still work
+
+    # if one of the two properties is missing should still work
     def test_missing_actor_property(self):
         res = self.client().patch('/actors/1', json={'age': 55})
         data = json.loads(res.data)
@@ -134,7 +135,7 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(data['success'], True)
             self.assertEqual(actor.format()['age'], 55)
 
-    #delete movie
+    # delete movie
     def delete_movie(self):
         res = self.client().delete('/movies/1')
         data = json.loads(res.data)
@@ -150,7 +151,7 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(data['success'], False)
             self.assertEqual(data['message'], 'resource not found!')
 
-    #delete actor
+    # delete actor
     def delete_actor(self):
         res = self.client().delete('/actors/1')
         data = json.loads(res.data)
@@ -165,6 +166,7 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
             self.assertEqual(data['message'], 'resource not found!')
+
 
 if __name__ == '__main__':
     unittest.main()

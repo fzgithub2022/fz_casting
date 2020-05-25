@@ -1,4 +1,5 @@
-import json, os
+import json
+import os
 from flask import request, _request_ctx_stack
 from functools import wraps
 from urllib.request import urlopen
@@ -8,11 +9,13 @@ AUTH0_DOMAIN = os.environ['AUTH_DOMAIN']
 ALGORITHMS = os.environ['ALGORITHMS']
 API_AUDIENCE = os.environ['API_AUDIENCE']
 
+
 # AuthError Exception
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
+
 
 # Auth Header
 def get_token_auth_header():
@@ -46,7 +49,7 @@ def get_token_auth_header():
     return token
 
 
-#Check Permissions
+# Check Permissions
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
         raise AuthError({
@@ -61,7 +64,7 @@ def check_permissions(permission, payload):
     return True
 
 
-#verify JWT
+# verify JWT
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
@@ -103,7 +106,8 @@ def verify_decode_jwt(token):
         except jwt.JWTClaimsError:
             raise AuthError({
                 'code': 'invalid_claims',
-                'description': 'Incorrect claims. Please, check the audience and issuer.'
+                'description':
+                'Incorrect claims. Please, check the audience and issuer.'
             }, 401)
         except Exception:
             raise AuthError({
@@ -115,7 +119,8 @@ def verify_decode_jwt(token):
                 'description': 'Unable to find the appropriate key.'
             }, 400)
 
-#require auth
+
+# equire auth
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)

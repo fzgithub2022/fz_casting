@@ -6,20 +6,21 @@ from flask_migrate import Migrate
 from models import setup_db, Movies, Actors, db
 from auth import AuthError, requires_auth
 
+
 def create_app(test_config=None):
-    #create and configure the app
+    # create and configure the app
     app = Flask(__name__)
 
-    #connect to databse and models
+    # connect to databse and models
     setup_db(app)
 
-    #enable flask_migrate
+    # enable flask_migrate
     migrate = Migrate(app, db)
 
-    #enable cross-origins
+    # enable cross-origins
     cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-    #set Access-Control-Allow
+    # set Access-Control-Allow
     @app.after_request
     def after_request(response):
         response.headers.add(
@@ -30,7 +31,7 @@ def create_app(test_config=None):
             'GET, POST, PATCH, DELETE')
         return response
 
-    #Insert Movie
+    # Insert Movie
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
     def post_movie(payload):
@@ -39,8 +40,8 @@ def create_app(test_config=None):
         rdate = body.get('rdate')
         try:
             movie = Movies(
-                name = name,
-                rdate = rdate
+                name=name,
+                rdate=rdate
             )
             Movies.insert(movie)
         except BaseException:
@@ -50,7 +51,7 @@ def create_app(test_config=None):
             'success': True
         }), 201
 
-    #Insert Actor
+    # Insert Actor
     @app.route('/actors', methods=['POST'])
     @requires_auth('post:actors')
     def post_actor(payload):
@@ -60,9 +61,9 @@ def create_app(test_config=None):
         gender = body.get('gender')
         try:
             actor = Actors(
-                name = name,
-                age = age,
-                gender = gender
+                name=name,
+                age=age,
+                gender=gender
             )
             Actors.insert(actor)
         except BaseException:
@@ -72,7 +73,7 @@ def create_app(test_config=None):
             'success': True
         }), 201
 
-    #Get Movies Decorator
+    # Get Movies Decorator
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def get_movies(payload):
@@ -86,10 +87,10 @@ def create_app(test_config=None):
             'success': True
         }), 200
 
-    #Get Actors Decorator
+    # Get Actors Decorator
     @app.route('/actors', methods=['GET'])
     @requires_auth('get:actors')
-    def get_actors(payload): #add payload when ready
+    def get_actors(payload):  # add payload when ready
         try:
             actors = Actors.query.all()
             formatted_actors = [actor.format() for actor in actors]
@@ -100,7 +101,7 @@ def create_app(test_config=None):
             'success': True
         }), 200
 
-    #Patch movie
+    # Patch movie
     @app.route('/movies/<int:m_id>', methods=['PATCH'])
     @requires_auth('modify:movies')
     def patch_movie(m_id, payload):
@@ -116,12 +117,12 @@ def create_app(test_config=None):
             abort(400)
         movie.rdate = rdate
         Movies.update(movie)
-        return jsonify ({
+        return jsonify({
             "status": "Movie updated",
             "success": True
         }), 200
 
-    #Patch Actor
+    # Patch Actor
     @app.route('/actors/<int:a_id>', methods=['PATCH'])
     @requires_auth('modify:actors')
     def patch_actor(a_id, payload):
@@ -131,7 +132,7 @@ def create_app(test_config=None):
             if actor is None:
                 abort(404)
         except BaseException:
-                abort(404)
+            abort(404)
         age = body.get('age')
         gender = body.get('gender')
         if age is None and gender is None:
@@ -144,7 +145,7 @@ def create_app(test_config=None):
             "success": True
         }), 200
 
-    #Delete Movie
+    # Delete Movie
     @app.route('/movies/<int:m_id>', methods=['DELETE'])
     @requires_auth('delete:movies')
     def del_movie(payload, m_id):
@@ -157,7 +158,7 @@ def create_app(test_config=None):
             'status': 'Deleted Successful'
         }), 200
 
-    #Delete Actor
+    # Delete Actor
     @app.route('/actors/<int:m_id>', methods=['DELETE'])
     @requires_auth('delete:actors')
     def del_actor(payload, a_id):
@@ -170,14 +171,14 @@ def create_app(test_config=None):
             'status': 'Deleted Successful'
         }), 200
 
-    #error handlers
+    # error handlers
     @app.errorhandler(400)
     def handle_400(error):
         return jsonify({
             'message': 'bad request! shame on you',
             'success': False
         }), 400
-    
+
     @app.errorhandler(AuthError)
     def handle_401(AuthError):
         status_code = AuthError.status_code
