@@ -160,7 +160,7 @@ def create_app(test_config=None):
     #Delete Actor
     @app.route('/actors/<int:m_id>', methods=['DELETE'])
     @requires_auth('delete:actors')
-    def del_actor(a_id, payload):
+    def del_actor(payload, a_id):
         try:
             actor = Actors.query.filter(Actors.id == a_id).one_or_none()
             actor.delete()

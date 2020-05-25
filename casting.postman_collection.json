@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "078003be-2dfd-4721-be59-c39889cfe001",
+		"name": "casting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CastingAssistant - GetMovies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "97d8a3de-37f1-4aec-aee5-30fbf27e1962",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik9ESTJSVVV5TlVVMlFqSTJNMEpEUWpsQ1JVSXpOelZCUVVZeVJrTkdORFJHTURBMk0wVXlSQSJ9.eyJpc3MiOiJodHRwczovL2Z6YXV0aC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVjODQzYzlmNzkwOGMwYzY4OWY0YWZjIiwiYXVkIjoiQ2FzdEF1dGhBcGkiLCJpYXQiOjE1OTA0Mzg5NTIsImV4cCI6MTU5MDQ0NjE1MiwiYXpwIjoiMkVGaXNDM3JmZDZXa1BRSWJ0NmZSbVVmenJJZ2VoT0giLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.cO9nNKomUOYr572QeTmOaeNM9LT6W09UGd1eU2CLtpD_IzGqrZQEE-jYOc5jkV3wFDghuT_6uHGD24ZqpwkhTDx28O3acFZQqXOpDyuVChfArVMXR4gja8N9ZTbjkIa3TV9CF-cg4jnG6GWUMdVsXq_wEpgpQ4Q5nbjhElqv20ADepUzYJgP2RtKzRKkDLUSRsTU9AHdhDoSS0_eliPoxSadYRFhGYwdYA5-RGlYZvSbKgKrAt2O_AuL75AZm7Ng1LgXTX-Zy6jurx_5gtHlsiU5BK00alf8_V8brJ7ptkQ-NhDic0XVmiZvcPK_wd0ajFjdNE2cfktWVjphzMLfvA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://guarded-harbor-15087.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"guarded-harbor-15087",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CastingAssistant - GetActors",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3b2c887-9e00-4281-9a51-a98a7f5c85b7",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik9ESTJSVVV5TlVVMlFqSTJNMEpEUWpsQ1JVSXpOelZCUVVZeVJrTkdORFJHTURBMk0wVXlSQSJ9.eyJpc3MiOiJodHRwczovL2Z6YXV0aC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVjODQzYzlmNzkwOGMwYzY4OWY0YWZjIiwiYXVkIjoiQ2FzdEF1dGhBcGkiLCJpYXQiOjE1OTA0Mzg5NTIsImV4cCI6MTU5MDQ0NjE1MiwiYXpwIjoiMkVGaXNDM3JmZDZXa1BRSWJ0NmZSbVVmenJJZ2VoT0giLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.cO9nNKomUOYr572QeTmOaeNM9LT6W09UGd1eU2CLtpD_IzGqrZQEE-jYOc5jkV3wFDghuT_6uHGD24ZqpwkhTDx28O3acFZQqXOpDyuVChfArVMXR4gja8N9ZTbjkIa3TV9CF-cg4jnG6GWUMdVsXq_wEpgpQ4Q5nbjhElqv20ADepUzYJgP2RtKzRKkDLUSRsTU9AHdhDoSS0_eliPoxSadYRFhGYwdYA5-RGlYZvSbKgKrAt2O_AuL75AZm7Ng1LgXTX-Zy6jurx_5gtHlsiU5BK00alf8_V8brJ7ptkQ-NhDic0XVmiZvcPK_wd0ajFjdNE2cfktWVjphzMLfvA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://guarded-harbor-15087.herokuapp.com/actors",
+					"protocol": "https",
+					"host": [
+						"guarded-harbor-15087",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"actors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CastingDirector - PostMovies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c0d5ee46-9bc5-4799-ae15-125ffdabd767",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik9ESTJSVVV5TlVVMlFqSTJNMEpEUWpsQ1JVSXpOelZCUVVZeVJrTkdORFJHTURBMk0wVXlSQSJ9.eyJpc3MiOiJodHRwczovL2Z6YXV0aC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVjODVkODRmNzkwOGMwYzY4OWZhNmFlIiwiYXVkIjoiQ2FzdEF1dGhBcGkiLCJpYXQiOjE1OTA0NDA0MzgsImV4cCI6MTU5MDQ0NzYzOCwiYXpwIjoiMkVGaXNDM3JmZDZXa1BRSWJ0NmZSbVVmenJJZ2VoT0giLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsIm1vZGlmeTphY3RvcnMiLCJtb2RpZnk6bW92aWVzIiwicG9zdDphY3RvcnMiXX0.MSC7cCgqXYoVEs1WN5LdCc8k5mjr1KFtY3txKODQUDWuC8oZPQehXqOzRQEascWLecx142sitKbguNwgzbP9_ne9SsX2oERbG2EOVWa1ciBkun3BwIX-R-rZn8httg3NJwOxwmEKWswlCxVZ7xr0Obew8TdpJBYOS5NqQ3jSQAYo3zvM6HAIApR-YwJ5V2CHWAuc6twdz1IbUjgd9Rh36JmKkA2OlMvgA9YVm4MWAk8jWHaWfuOq3Tbox0RPeXebbURqbrun4viRUjgq7-YfpOQoqOZpIVC9uKyrd3XmtTgftgQXONyyzDLGk-HsUu2-po4zx0CP_kyUrpY9tnz_cA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Charlize Theron\",\n\t\"rdate\": \"December 19, 2019\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://guarded-harbor-15087.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"guarded-harbor-15087",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CastingDirector - PostActor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c0d5ee46-9bc5-4799-ae15-125ffdabd767",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik9ESTJSVVV5TlVVMlFqSTJNMEpEUWpsQ1JVSXpOelZCUVVZeVJrTkdORFJHTURBMk0wVXlSQSJ9.eyJpc3MiOiJodHRwczovL2Z6YXV0aC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVjODVkODRmNzkwOGMwYzY4OWZhNmFlIiwiYXVkIjoiQ2FzdEF1dGhBcGkiLCJpYXQiOjE1OTA0NDA0MzgsImV4cCI6MTU5MDQ0NzYzOCwiYXpwIjoiMkVGaXNDM3JmZDZXa1BRSWJ0NmZSbVVmenJJZ2VoT0giLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsIm1vZGlmeTphY3RvcnMiLCJtb2RpZnk6bW92aWVzIiwicG9zdDphY3RvcnMiXX0.MSC7cCgqXYoVEs1WN5LdCc8k5mjr1KFtY3txKODQUDWuC8oZPQehXqOzRQEascWLecx142sitKbguNwgzbP9_ne9SsX2oERbG2EOVWa1ciBkun3BwIX-R-rZn8httg3NJwOxwmEKWswlCxVZ7xr0Obew8TdpJBYOS5NqQ3jSQAYo3zvM6HAIApR-YwJ5V2CHWAuc6twdz1IbUjgd9Rh36JmKkA2OlMvgA9YVm4MWAk8jWHaWfuOq3Tbox0RPeXebbURqbrun4viRUjgq7-YfpOQoqOZpIVC9uKyrd3XmtTgftgQXONyyzDLGk-HsUu2-po4zx0CP_kyUrpY9tnz_cA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Charlize Theron\",\n\t\"age\": 43,\n\t\"gender\": \"Female\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://guarded-harbor-15087.herokuapp.com/actors",
+					"protocol": "https",
+					"host": [
+						"guarded-harbor-15087",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"actors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ExcecutiveProducer - PostMovies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1275fb23-e82a-4c0f-a696-6d5f3bc59b70",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik9ESTJSVVV5TlVVMlFqSTJNMEpEUWpsQ1JVSXpOelZCUVVZeVJrTkdORFJHTURBMk0wVXlSQSJ9.eyJpc3MiOiJodHRwczovL2Z6YXV0aC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVjODVkYzVlZTU2YzQwYzZkN2VjNDliIiwiYXVkIjoiQ2FzdEF1dGhBcGkiLCJpYXQiOjE1OTA0NDM2MzUsImV4cCI6MTU5MDQ1MDgzNSwiYXpwIjoiMkVGaXNDM3JmZDZXa1BRSWJ0NmZSbVVmenJJZ2VoT0giLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJkZWxldGU6bW92aWVzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJtb2RpZnk6YWN0b3JzIiwibW9kaWZ5Om1vdmllcyIsInBvc3Q6YWN0b3JzIiwicG9zdDptb3ZpZXMiXX0.zalUpNXySvYgDy5dnSLF0s4AgrBJtR34te8dJ_gvYKQA4pfK1ihNtDbDLPZo6lRQXXwKifwxd_PI0k9gL1qEmQBBfZQtblx0vpQAG1DQ2HnXOOcXTl6NNZZemmMaWCNoodoG5yidTeevLgKKqv6N_pTonE_gF6e9pdlza5eaZdSiBVfxTTqUf9ew1SoVh79EHnU-JlEyPAvZLMudCx4PjxBKjeFmK_Nvc8SL6ajSv4ejrPllGmP08ff3Oihx8amvqA3HtiTvVFW0LqbUuh05Be4klr1xIwCtTHkcFnm3lzJtk705XhKBGknD2Cpq_CnaycuiJ_eu6cF2rfFr_aKsDw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Bomb Shell\",\n\t\"rdate\": \"December 19, 2019\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://guarded-harbor-15087.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"guarded-harbor-15087",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ExcecutiveProducer -  DeleteMovie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c7e1caa-e053-42e1-a471-05cf9dbc0093",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik9ESTJSVVV5TlVVMlFqSTJNMEpEUWpsQ1JVSXpOelZCUVVZeVJrTkdORFJHTURBMk0wVXlSQSJ9.eyJpc3MiOiJodHRwczovL2Z6YXV0aC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVjODVkYzVlZTU2YzQwYzZkN2VjNDliIiwiYXVkIjoiQ2FzdEF1dGhBcGkiLCJpYXQiOjE1OTA0NDM2MzUsImV4cCI6MTU5MDQ1MDgzNSwiYXpwIjoiMkVGaXNDM3JmZDZXa1BRSWJ0NmZSbVVmenJJZ2VoT0giLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJkZWxldGU6bW92aWVzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJtb2RpZnk6YWN0b3JzIiwibW9kaWZ5Om1vdmllcyIsInBvc3Q6YWN0b3JzIiwicG9zdDptb3ZpZXMiXX0.zalUpNXySvYgDy5dnSLF0s4AgrBJtR34te8dJ_gvYKQA4pfK1ihNtDbDLPZo6lRQXXwKifwxd_PI0k9gL1qEmQBBfZQtblx0vpQAG1DQ2HnXOOcXTl6NNZZemmMaWCNoodoG5yidTeevLgKKqv6N_pTonE_gF6e9pdlza5eaZdSiBVfxTTqUf9ew1SoVh79EHnU-JlEyPAvZLMudCx4PjxBKjeFmK_Nvc8SL6ajSv4ejrPllGmP08ff3Oihx8amvqA3HtiTvVFW0LqbUuh05Be4klr1xIwCtTHkcFnm3lzJtk705XhKBGknD2Cpq_CnaycuiJ_eu6cF2rfFr_aKsDw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Bomb Shell\",\n\t\"rdate\": \"December 19, 2019\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://guarded-harbor-15087.herokuapp.com/movies/3",
+					"protocol": "https",
+					"host": [
+						"guarded-harbor-15087",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

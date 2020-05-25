@@ -28,6 +28,8 @@ ENDPOINTS:
 			PATCH: Change movie release date
 			DELETE: Delete movie from database
 
+Postman RBAC testing collection:
+	casting.postman_collection.json
 JWTs Per Role:
 	1. Casting assistant Role
 		Role name: CAGroup
