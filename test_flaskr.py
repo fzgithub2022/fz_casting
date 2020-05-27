@@ -32,25 +32,41 @@ class CastingAppTestCase(unittest.TestCase):
             # create all tables
             self.db.create_all()
 
-        # new test movie
-        self.new_movie = {
-            'name': 'The Matrix',
-            'rdate': 'March 30, 1999'
-        }
+        # get auth tokens
+        bearer = 'bearer '
+        catoken = bearer + os.environ['CATOKEN']
+        cdtoken = bearer + os.environ['CDTOKEN']
+        eptoken = bearer + os.environ['EPTOKEN']
 
-        # new test actor
+        # Creative Assistant Header
+        self.ca_header = {'Authorization': catoken}
+
+        # Creative Direcctor Header
+        self.cd_header = {'Authorization': cdtoken}
+
+        # Executive Producer Header
+        self.ep_header = {'Authorization': eptoken}
+
+        # Sample Actor
         self.new_actor = {
             'name': 'Keanu Reeves',
             'age': 54,
             'gender': 'Female'
         }
 
+        # Sample Movie
+        self.new_movie = {
+            'name': 'The Matrix',
+            'rdate': 'March 30, 1999'
+        }
+
     def tearDown(self):
         pass
 
-    # insert movie success and error test
+    # Executive Producers POST /movies should succeed
     def test_insert_movie(self):
-        res = self.client().post('/movies', json=self.new_movie)
+        res = self.client().post('/movies',
+                                 headers=self.ep_header, json=self.new_movie)
         data = json.loads(res.data)
         if res.status_code == 201:
             self.assertEqual(res.status_code, 201)
@@ -59,9 +75,10 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
 
-    # insert actor test
+    # Creative Director POST /movies should succeed
     def test_insert_actor(self):
-        res = self.client().post('/actors', json=self.new_actor)
+        res = self.client().post('/actors',
+                                 headers=self.cd_header, json=self.new_actor)
         data = json.loads(res.data)
         if res.status_code == 201:
             self.assertEqual(res.status_code, 201)
@@ -70,9 +87,9 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
 
-    # get movies test
+    # Createive Assistant GET /movies should succeed
     def test_movies(self):
-        res = self.client().get('/movies')
+        res = self.client().get('/movies', headers=self.ca_header)
         data = json.loads(res.data)
         if res.status_code == 200:
             self.assertEqual(res.status_code, 200)
@@ -81,9 +98,9 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
 
-    # get actors test
+    # Create Assistant GET /actors should succeed
     def test_actors(self):
-        res = self.client().get('/actors')
+        res = self.client().get('/actors', headers=self.ca_header)
         data = json.loads(res.data)
         if res.status_code == 200:
             self.assertEqual(res.status_code, 200)
@@ -92,9 +109,27 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
 
-    # patch movie
+    # Creative Assistant /movies should fail with 403
+    def test_insert_movie_ca(self):
+        res = self.client().post('/movies',
+                                 headers=self.ca_header, json=self.new_movie)
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 403)
+        self.assertEqual(data['success'], False)
+
+    # Creative Assistant /actors should fail with 403
+    def test_insert_actor_ca(self):
+        res = self.client().post('/actors',
+                                 headers=self.ca_header, json=self.new_actor)
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 403)
+        self.assertEqual(data['success'], False)
+
+    # Executive Producer PATCH /movies/<int:m_id> should succeed
     def test_patching_movie(self):
-        res = self.client().patch('/movies/1', json={'rdate': 'March 31, 1999'})
+        res = self.client().patch('/movies/1',
+                                  headers=self.ep_header,
+                                  json={'rdate': 'March 31, 1999'})
         data = json.loads(res.data)
         movie = Movies.query.filter(Movies.id == 1).one_or_none()
         if res.status_code == 200:
@@ -105,16 +140,11 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
 
-    # test empty release date error
-    def test_empty_rdate(self):
-        res = self.client().patch('/movies/1', json={'rdate': None})
-        data = json.loads(res.data)
-        self.assertEqual(res.status_code, 400)
-        self.assertEqual(data['success'], False)
-
-    # patch actor
+    # Creative Director PATCH /actors/<int:a_id> should succeed
     def test_patching_actor(self):
-        res = self.client().patch('/actors/1', json={'age': 55, 'gender': 'Male'})
+        res = self.client().patch('/actors/1',
+                                  headers=self.cd_header,
+                                  json={'age': 55, 'gender': 'Male'})
         data = json.loads(res.data)
         actor = Actors.query.filter(Actors.id == 1).one_or_none()
         if res.status_code == 200:
@@ -125,47 +155,68 @@ class CastingAppTestCase(unittest.TestCase):
             self.assertEqual(res.status_code, 404)
             self.assertEqual(data['success'], False)
 
-    # if one of the two properties is missing should still work
-    def test_missing_actor_property(self):
-        res = self.client().patch('/actors/1', json={'age': 55})
+    # Creative Assistant /movies/<int:m_id>/ should fail with 403
+    def test_patching_movie(self):
+        res = self.client().patch('/movies/1',
+                                  headers=self.ca_header,
+                                  json={'rdate': 'March 31, 1999'})
         data = json.loads(res.data)
-        actor = Actors.query.filter(Actors.id == 1).one_or_none()
-        if res.status_code == 200:
-            self.assertEqual(res.status_code, 200)
-            self.assertEqual(data['success'], True)
-            self.assertEqual(actor.format()['age'], 55)
+        self.assertEqual(res.status_code, 403)
+        self.assertEqual(data['success'], False)
 
-    # delete movie
+    # Creative Assistant /actors/<int:m_id>/ should fail with 403
+    def test_patching_actor(self):
+        res = self.client().patch('/actors/1',
+                                  headers=self.ca_header,
+                                  json={'age': 55, 'gender': 'Male'})
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 403)
+        self.assertEqual(data['success'], False)
+
+    # Executive Producer DELETE /movies/<int:m_id>/ should succeed
+    def delete_movie_ep(self):
+        res = self.client().delete('/movies/1',
+                                   headers=self.ep_header)
+        data = json.loads(res.data)
+        # if the is the first time running the test
+        if res.status_code == 200:
+            # the record will be available and
+            # delete will be successful
+            self.assertEqual(res.status_code, 200)
+        else:  # otherwise was deleted
+            # so resource won't be found
+            self.assertEqual(res.status_code, 404)
+            self.assertEqual(data['success'], False)
+            self.assertEqual(data['message'], 'resource not found!')
+
+    # Creative Director DELETE /actors/<int:a_id>/ should succeed
+    def delete_actor_cd(self):
+        res = self.client().delete('/actors/1', headers=self.cd_header)
+        data = json.loads(res.data)
+        # if the is the first time running the test
+        if res.status_code == 200:
+            # the record will be available and
+            # delete will be successful
+            self.assertEqual(res.status_code, 200)
+        else:  # otherwise was deleted
+            # so resource won't be found
+            self.assertEqual(res.status_code, 404)
+            self.assertEqual(data['success'], False)
+            self.assertEqual(data['message'], 'resource not found!')
+
+    # Creative Assistant /movies/<int:m_id>/ should fail with 403
     def delete_movie(self):
-        res = self.client().delete('/movies/1')
+        res = self.client().delete('/movies/1', headers=self.ca_header)
         data = json.loads(res.data)
+        self.assertEqual(res.status_code, 403)
+        self.assertEqual(data['success'], False)
 
-        # if the is the first time running the test
-        if res.status_code == 200:
-            # the record will be available and
-            # delete will be successful
-            self.assertEqual(res.status_code, 200)
-        else:  # otherwise was deleted
-            # so resource won't be found
-            self.assertEqual(res.status_code, 404)
-            self.assertEqual(data['success'], False)
-            self.assertEqual(data['message'], 'resource not found!')
-
-    # delete actor
+    # Creative Assistant /actors/<int:m_id>/ should fail with 403
     def delete_actor(self):
-        res = self.client().delete('/actors/1')
+        res = self.client().delete('/actors/1', headers=self.ca_header)
         data = json.loads(res.data)
-
-        # if the is the first time running the test
-        if res.status_code == 200:
-            # the record will be available and
-            # delete will be successful
-            self.assertEqual(res.status_code, 200)
-        else:  # otherwise was deleted
-            # so resource won't be found
-            self.assertEqual(res.status_code, 404)
-            self.assertEqual(data['success'], False)
-            self.assertEqual(data['message'], 'resource not found!')
+        self.assertEqual(res.status_code, 403)
+        self.assertEqual(data['success'], False)
 
 
 if __name__ == '__main__':

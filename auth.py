@@ -120,7 +120,7 @@ def verify_decode_jwt(token):
             }, 400)
 
 
-# equire auth
+# require auth
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
